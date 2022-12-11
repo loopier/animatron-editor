@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://TextEdit.gd" type="Script" id=1]
+[ext_resource path="res://fonts/mononoki_Bold.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 2 )
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="TextEdit" type="TextEdit" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+custom_fonts/font = SubResource( 1 )
+text = "/def /alo target arg1 arg2
+	/position/x $actor 0.25
+	/scale $actor 0.5
+
+/alo anactor 1.1 bla"
+show_line_numbers = true
+minimap_draw = true
+caret_blink = true
+script = ExtResource( 1 )
+
+[connection signal="gui_input" from="TextEdit" to="TextEdit" method="_on_TextEdit_gui_input"]
