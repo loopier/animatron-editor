@@ -10,17 +10,20 @@ font_data = ExtResource( 2 )
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource( 3 )
 
 [node name="TextEdit" type="TextEdit" parent="."]
 margin_right = 984.0
 margin_bottom = 600.0
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
 custom_fonts/font = SubResource( 1 )
-text = "/def /alo target arg1 arg2
-	/position/x $actor 0.25
-	/scale $actor 0.5
-
-/alo anactor 1.1 bla"
 show_line_numbers = true
 minimap_draw = true
 caret_blink = true
@@ -45,7 +48,7 @@ margin_left = 203.0
 margin_top = 92.0
 margin_right = 789.0
 margin_bottom = 493.0
-window_title = "Load File"
+window_title = "Open a File"
 mode = 0
 access = 2
 

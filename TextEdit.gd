@@ -1,35 +1,27 @@
 extends TextEdit
 
-var oscsnd
-var oscrcv
-
-var sndip
-var sndport
-var rcvport
-
 var regex
+var main
 
 
 func _ready():
 	regex = RegEx.new()
+	main = get_parent()
+	var help = "================================================================\n" \
+	+ "\t This is a simple OSC sender for Animatron. \n" \
+	+ "\t To use it, type OSC messages with the format:\n" \
+	+ "\n" \
+	+ "\t /<CMD> <TARGET_NAME> <ARG_1> [... ARG_N]\n" \
+	+ "\n" \
+	+ "\t Then press: CTRL + ENTER to evaluate the current line or selection.\n" \
+	+ "\n" \
+	+ "\t See the OSC interface documentation in 'docs/Reference.md.html for a\n" \
+	+ "\t\t full list of available OSC messages.\n" \
+	+ "================================================================\n\n" \
+	+ "/list/assets" 
+	set_text(help)
+	print(main)
 	
-	oscsnd = load("res://addons/gdosc/gdoscsender.gdns").new()
-	sndip = "127.0.0.1"
-	sndport = 56101
-	oscsnd.setup(sndip, sndport)
-	oscsnd.start()
-	
-	# See: https://gitlab.com/frankiezafe/gdosc
-	oscrcv = load("res://addons/gdosc/gdoscreceiver.gdns").new()
-	rcvport = 56102
-	# [optional] maximum number of messages in the buffer, default is 100
-	oscrcv.max_queue( 256 )
-	# [optional]  receiver will only keeps the "latest" message for each address
-	oscrcv.avoid_duplicate( false )
-	# [mandatory] listening to port 14000
-	oscrcv.setup( rcvport )
-	# [mandatory] starting the reception of messages
-	oscrcv.start()
 
 func _on_TextEdit_gui_input(event):
 #	print(event)
@@ -60,12 +52,6 @@ func textToOsc( msgString ):
 		var cmd = Array(line.split(" ")) # conver PoolStringArray to Array
 		var addr = cmd[0].strip_edges()
 		var args = cmd.slice(1,-1)
-		sendMessage(addr, args)
+		main.sendMessage(addr, args)
 #	sendMessage(cmds)
 
-func sendMessage(oscAddress, oscArgs):
-	print("sending: %s %s" % [oscAddress, oscArgs])
-	oscsnd.msg(oscAddress)
-	for arg in oscArgs:
-		oscsnd.add(arg)
-	oscsnd.send()
